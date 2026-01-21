@@ -2,6 +2,7 @@ const { withNativeFederation, shareAll } = require('@angular-architects/native-f
 
 module.exports = withNativeFederation({
   name: 'rocky',
+  publicHost: 'http://localhost:4202',
 
   exposes: {
     './routes': './apps/remotes/rocky/src/app/remote.routes.ts',

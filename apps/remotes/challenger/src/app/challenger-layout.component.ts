@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { RcButtonComponent } from '@rocker-code/shared';
+import { CovalentMessageModule } from '@covalent/core/message';
 
 @Component({
   selector: 'app-challenger-layout',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, RcButtonComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, RcButtonComponent, CovalentMessageModule],
   template: `
     <div class="challenger-shell">
       <aside class="challenger-sidebar">
@@ -26,6 +27,13 @@ import { RcButtonComponent } from '@rocker-code/shared';
         </div>
       </aside>
       <section class="challenger-main">
+        <td-message
+          label="Covalent"
+          sublabel="Shared theme + signals-ready views."
+          color="primary"
+          icon="event"
+          [opened]="true"
+        />
         <router-outlet></router-outlet>
       </section>
     </div>

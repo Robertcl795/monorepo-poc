@@ -77,6 +77,16 @@
                 "input": "apps/shell/src",
                 "glob": "federation.manifest.json",
                 "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/min",
+                "output": "/assets/monaco"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/esm/vs/base/browser/ui/codicons/codicon",
+                "output": "/assets/monaco/vs/base/browser/ui/codicons/codicon"
               }
             ],
             "styles": ["apps/shell/src/styles.scss"],
@@ -177,6 +187,16 @@
               {
                 "glob": "**/*",
                 "input": "apps/remotes/editor/public"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/min",
+                "output": "/assets/monaco"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/esm/vs/base/browser/ui/codicons/codicon",
+                "output": "/assets/monaco/vs/base/browser/ui/codicons/codicon"
               }
             ],
             "styles": ["apps/remotes/editor/src/styles.scss"],
@@ -237,7 +257,12 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "port": 4201
+            "port": 4201,
+            "headers": {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET,OPTIONS",
+              "Access-Control-Allow-Headers": "Content-Type, Authorization"
+            }
           }
         },
         "lint": {
@@ -296,6 +321,16 @@
               {
                 "glob": "**/*",
                 "input": "apps/remotes/rocky/public"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/min",
+                "output": "/assets/monaco"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/esm/vs/base/browser/ui/codicons/codicon",
+                "output": "/assets/monaco/vs/base/browser/ui/codicons/codicon"
               }
             ],
             "styles": ["apps/remotes/rocky/src/styles.scss"],
@@ -356,7 +391,12 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "port": 4202
+            "port": 4202,
+            "headers": {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET,OPTIONS",
+              "Access-Control-Allow-Headers": "Content-Type, Authorization"
+            }
           }
         },
         "lint": {
@@ -415,6 +455,16 @@
               {
                 "glob": "**/*",
                 "input": "apps/remotes/challenger/public"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/min",
+                "output": "/assets/monaco"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/esm/vs/base/browser/ui/codicons/codicon",
+                "output": "/assets/monaco/vs/base/browser/ui/codicons/codicon"
               }
             ],
             "styles": ["apps/remotes/challenger/src/styles.scss"],
@@ -475,7 +525,12 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "port": 4203
+            "port": 4203,
+            "headers": {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET,OPTIONS",
+              "Access-Control-Allow-Headers": "Content-Type, Authorization"
+            }
           }
         },
         "lint": {

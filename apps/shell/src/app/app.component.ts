@@ -6,11 +6,19 @@ import { filter, map, startWith } from 'rxjs';
 import { RemoteName, RemoteStore } from '@rocker-code/shared';
 import { ThemeComponent } from '@rocker-code/theme';
 import { RcButtonComponent } from '@rocker-code/shared';
+import { CovalentMessageModule } from '@covalent/core/message';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, ThemeComponent, RcButtonComponent],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    ThemeComponent,
+    RcButtonComponent,
+    CovalentMessageModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

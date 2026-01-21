@@ -2,6 +2,7 @@ const { withNativeFederation, shareAll } = require('@angular-architects/native-f
 
 module.exports = withNativeFederation({
   name: 'editor',
+  publicHost: 'http://localhost:4201',
 
   exposes: {
     './routes': './apps/remotes/editor/src/app/remote.routes.ts',
