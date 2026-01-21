@@ -1,14 +1,5 @@
 @use '../../../libs/theme/src/lib/theme';
-
-:root {
-  font-family:
-    'Space Grotesk',
-    Sora,
-    Inter,
-    system-ui,
-    -apple-system,
-    sans-serif;
-}
+@import 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Material+Symbols+Outlined:wght@400;500&display=swap';
 
 * {
   box-sizing: border-box;
@@ -19,6 +10,12 @@ body {
   min-height: 100vh;
   background: var(--rc-bg);
   color: var(--rc-text);
+  font-family:
+    Inter,
+    'Space Grotesk',
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 a {
