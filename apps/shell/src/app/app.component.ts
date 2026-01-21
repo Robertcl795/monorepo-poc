@@ -22,7 +22,12 @@ export class AppComponent {
     { route: 'editor', label: 'Editor', description: 'Notes & ideation space', emoji: '✏️' },
     { route: 'rocky', label: 'Rocky', description: 'Search & spotlight', emoji: '🔎' },
     { route: 'challenger', label: 'Challenger', description: 'Planner & calendar', emoji: '📆' },
-  ];
+  ] satisfies ReadonlyArray<{
+    route: RemoteName;
+    label: string;
+    description: string;
+    emoji: string;
+  }>;
 
   private readonly currentUrl = toSignal(
     this.router.events.pipe(
