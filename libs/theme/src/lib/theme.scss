@@ -1,0 +1,52 @@
+:root {
+  --rc-bg: #0b101a;
+  --rc-surface: #111828;
+  --rc-surface-strong: #1b273a;
+  --rc-text: #e6edf7;
+  --rc-muted: #94a3b8;
+  --rc-border: #243044;
+  --rc-accent: #8b5cf6;
+  --rc-accent-strong: #22c55e;
+  --rc-danger: #f43f5e;
+  --rc-radius: 14px;
+
+  color-scheme: dark;
+}
+
+.rc-theme-light {
+  --rc-bg: #f8fafc;
+  --rc-surface: #fff;
+  --rc-surface-strong: #f1f5f9;
+  --rc-text: #0f172a;
+  --rc-muted: #475569;
+  --rc-border: #e2e8f0;
+  --rc-accent: #2563eb;
+  --rc-accent-strong: #22c55e;
+  --rc-danger: #e11d48;
+
+  color-scheme: light;
+  background: var(--rc-bg);
+  color: var(--rc-text);
+}
+
+.rc-theme-dark {
+  background: var(--rc-bg);
+  color: var(--rc-text);
+}
+
+.rc-surface {
+  background: var(--rc-surface);
+  border: 1px solid var(--rc-border);
+  border-radius: var(--rc-radius);
+  box-shadow: 0 20px 40px rgb(0 0 0 / 20%);
+  color: var(--rc-text);
+}
+
+.rc-title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.rc-subtle {
+  color: var(--rc-muted);
+}

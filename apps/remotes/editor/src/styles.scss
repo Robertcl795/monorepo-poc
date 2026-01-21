@@ -1,0 +1,85 @@
+@use '../../../../libs/theme/src/lib/theme';
+
+:root {
+  font-family:
+    'Space Grotesk',
+    Sora,
+    Inter,
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--rc-bg);
+  color: var(--rc-text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.editor-shell {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+  min-height: 100vh;
+  padding: 1.5rem;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tab-bar {
+  display: inline-flex;
+  gap: 0.35rem;
+  background: var(--rc-surface);
+  border: 1px solid var(--rc-border);
+  padding: 0.35rem;
+  border-radius: 999px;
+}
+
+.tab-chip {
+  border: none;
+  background: transparent;
+  color: var(--rc-text);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.tab-chip.active {
+  background: var(--rc-surface-strong);
+  border: 1px solid var(--rc-accent);
+}
+
+.editor-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.editor-pane {
+  background: var(--rc-surface);
+  border: 1px solid var(--rc-border);
+  border-radius: var(--rc-radius);
+  padding: 1rem;
+  box-shadow: 0 25px 60px rgb(0 0 0 / 18%);
+}
+
+textarea,
+.notes-area {
+  width: 100%;
+  min-height: 320px;
+  border-radius: 12px;
+  border: 1px solid var(--rc-border);
+  padding: 0.85rem;
+  background: var(--rc-bg);
+  color: var(--rc-text);
+  resize: vertical;
+}

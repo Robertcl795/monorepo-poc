@@ -1,0 +1,5 @@
+{
+  "editor": "http://localhost:4201/remoteEntry.json",
+  "rocky": "http://localhost:4202/remoteEntry.json",
+  "challenger": "http://localhost:4203/remoteEntry.json"
+}

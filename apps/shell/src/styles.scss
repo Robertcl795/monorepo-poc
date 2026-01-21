@@ -1,0 +1,92 @@
+@use '../../libs/theme/src/lib/theme';
+
+:root {
+  font-family:
+    'Space Grotesk',
+    Sora,
+    Inter,
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--rc-bg);
+  color: var(--rc-text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.app-sidebar {
+  padding: 1.5rem;
+  border-right: 1px solid var(--rc-border);
+  background: linear-gradient(180deg, var(--rc-surface), rgb(17 24 40 / 95%));
+}
+
+.app-main {
+  padding: 1.5rem;
+}
+
+.nav-item {
+  align-items: center;
+  border-radius: 12px;
+  color: var(--rc-muted);
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.nav-item:hover {
+  background: var(--rc-surface-strong);
+  color: var(--rc-text);
+}
+
+.nav-item.active {
+  background: linear-gradient(120deg, var(--rc-surface-strong), var(--rc-surface));
+  color: var(--rc-text);
+  border: 1px solid var(--rc-accent);
+}
+
+.content-card {
+  background: var(--rc-surface);
+  border: 1px solid var(--rc-border);
+  border-radius: var(--rc-radius);
+  padding: 1.25rem;
+  box-shadow: 0 30px 60px rgb(0 0 0 / 18%);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.badge {
+  background: rgb(139 92 246 / 15%);
+  border: 1px solid var(--rc-accent);
+  border-radius: 999px;
+  color: var(--rc-text);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
