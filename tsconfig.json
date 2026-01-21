@@ -16,7 +16,8 @@
     "moduleResolution": "bundler",
     "paths": {
       "@rocker-code/shared": ["./libs/shared/src/public-api.ts"],
-      "@rocker-code/theme": ["./libs/theme/src/public-api.ts"]
+      "@rocker-code/theme": ["./libs/theme/src/public-api.ts"],
+      "@rocker-code/ui-components": ["./libs/ui-components/src/public-api.ts"]
     },
     "importHelpers": true,
     "target": "ES2022",

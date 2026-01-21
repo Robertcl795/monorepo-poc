@@ -7,6 +7,7 @@ import { RemoteName, RemoteStore } from '@rocker-code/shared';
 import { ThemeComponent } from '@rocker-code/theme';
 import { RcButtonComponent } from '@rocker-code/shared';
 import { CovalentMessageModule } from '@covalent/core/message';
+import { CvAppShellComponent } from '@rocker-code/ui-components';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import { CovalentMessageModule } from '@covalent/core/message';
     ThemeComponent,
     RcButtonComponent,
     CovalentMessageModule,
+    CvAppShellComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -27,14 +29,19 @@ export class AppComponent {
   private readonly remoteStore = inject(RemoteStore);
 
   readonly navItems = [
-    { route: 'editor', label: 'Editor', description: 'Notes & ideation space', emoji: '✏️' },
-    { route: 'rocky', label: 'Rocky', description: 'Search & spotlight', emoji: '🔎' },
-    { route: 'challenger', label: 'Challenger', description: 'Planner & calendar', emoji: '📆' },
+    { key: 'editor', label: 'Editor', description: 'Notes & ideation space', icon: 'edit' },
+    { key: 'rocky', label: 'Rocky', description: 'Search & spotlight', icon: 'travel_explore' },
+    {
+      key: 'challenger',
+      label: 'Challenger',
+      description: 'Planner & calendar',
+      icon: 'calendar_today',
+    },
   ] satisfies ReadonlyArray<{
-    route: RemoteName;
+    key: RemoteName;
     label: string;
     description: string;
-    emoji: string;
+    icon: string;
   }>;
 
   private readonly currentUrl = toSignal(
@@ -47,8 +54,8 @@ export class AppComponent {
 
   readonly currentRemote = computed<RemoteName>(() => {
     const url = this.currentUrl();
-    const match = this.navItems.find((item) => url?.startsWith(`/${item.route}`));
-    return (match?.route as RemoteName) ?? null;
+    const match = this.navItems.find((item) => url?.startsWith(`/${item.key}`));
+    return (match?.key as RemoteName) ?? null;
   });
 
   constructor() {
@@ -58,6 +65,9 @@ export class AppComponent {
   }
 
   onNavigate(route: RemoteName): void {
-    this.remoteStore.setRemote(route);
+    const target = route ?? null;
+    if (!target) return;
+    this.remoteStore.setRemote(target);
+    this.router.navigate(['/', target]).catch(console.error);
   }
 }
