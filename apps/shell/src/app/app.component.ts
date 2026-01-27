@@ -1,13 +1,14 @@
 import { Component, computed, effect, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd } from '@angular/router';
 import { filter, map, startWith } from 'rxjs';
 import { RemoteName, RemoteStore } from '@rocker-code/shared';
-import { ThemeComponent } from '@rocker-code/theme';
 import { RcButtonComponent } from '@rocker-code/shared';
-import { CovalentMessageModule } from '@covalent/core/message';
 import { CvAppShellComponent } from '@rocker-code/ui-components';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
@@ -15,10 +16,10 @@ import { CvAppShellComponent } from '@rocker-code/ui-components';
   imports: [
     RouterOutlet,
     RouterLink,
-    RouterLinkActive,
-    ThemeComponent,
     RcButtonComponent,
-    CovalentMessageModule,
+    MatCardModule,
+    MatChipsModule,
+    MatIconModule,
     CvAppShellComponent,
   ],
   templateUrl: './app.component.html',
@@ -65,7 +66,7 @@ export class AppComponent {
   }
 
   onNavigate(route: RemoteName): void {
-    const target = route ?? null;
+    const target = route;
     if (!target) return;
     this.remoteStore.setRemote(target);
     this.router.navigate(['/', target]).catch(console.error);

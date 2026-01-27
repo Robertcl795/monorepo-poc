@@ -1,5 +1,10 @@
-import { Component, computed, input, output } from '@angular/core';
-import { NgClass, NgIf } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, input, output, signal } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 type NavItem = {
   key: string;
@@ -11,165 +16,128 @@ type NavItem = {
 @Component({
   selector: 'rc-cv-app-shell',
   standalone: true,
-  imports: [NgIf, NgClass],
+  imports: [
+    NgIf,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <div class="cv-shell" [class.contained]="contained()">
-      <header class="cv-shell__header">
-        <div class="cv-shell__brand">
-          <div class="cv-shell__logo">
-            <ng-content select="[logo]"></ng-content>
-          </div>
-          <div>
+    <mat-sidenav-container class="cv-shell" [class.contained]="contained()">
+      <mat-sidenav
+        mode="side"
+        [opened]="opened()"
+        class="cv-shell__nav"
+        [fixedInViewport]="false"
+        (openedChange)="opened.set($event)"
+      >
+        <div class="cv-shell__logo">
+          <ng-content select="[logo]"></ng-content>
+        </div>
+        <mat-nav-list>
+          @for (item of navItems(); track item.key) {
+            <a
+              mat-list-item
+              (click)="onNavigate(item.key)"
+              [class.active]="item.key === activeKey()"
+            >
+              <mat-icon aria-hidden="true" *ngIf="item.icon">{{ item.icon }}</mat-icon>
+              <div class="cv-shell__nav-text">
+                <span class="cv-shell__nav-label">{{ item.label }}</span>
+                <span class="cv-shell__nav-desc" *ngIf="item.description">{{
+                  item.description
+                }}</span>
+              </div>
+            </a>
+          }
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+        <mat-toolbar color="primary" class="cv-shell__toolbar">
+          <button mat-icon-button type="button" (click)="toggleNav()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <div class="cv-shell__titles">
             <div class="cv-shell__app">{{ appName() }}</div>
             <div class="cv-shell__section">{{ sectionName() }}</div>
           </div>
-        </div>
-        <div class="cv-shell__section-action">
-          <ng-content select="[section-action]"></ng-content>
-        </div>
-        <div class="cv-shell__user-menu">
-          <ng-content select="[user-menu]"></ng-content>
-        </div>
-      </header>
+          <span class="spacer"></span>
+          <ng-content select="[toolbar-actions]"></ng-content>
+          <!-- Example Material Web hook -->
+          <md-icon-button aria-label="user menu" hidden></md-icon-button>
+        </mat-toolbar>
 
-      <div class="cv-shell__body" [class.open]="open() || forcedOpen()">
-        <aside class="cv-shell__nav" aria-label="Application navigation">
-          <ng-content select="[navigation]"></ng-content>
-
-          <ng-container *ngIf="hasNav()">
-            @for (item of navItems(); track item.key) {
-              <button
-                type="button"
-                class="cv-shell__nav-item"
-                [class.active]="item.key === activeKey()"
-                (click)="onNavigate(item.key)"
-              >
-                <span class="material-symbols-outlined" *ngIf="item.icon">{{ item.icon }}</span>
-                <div class="cv-shell__nav-text">
-                  <span class="cv-shell__nav-label">{{ item.label }}</span>
-                  <span class="cv-shell__nav-desc" *ngIf="item.description">{{
-                    item.description
-                  }}</span>
-                </div>
-              </button>
-            }
-          </ng-container>
-        </aside>
-
-        <main class="cv-shell__content">
-          <div class="cv-shell__tabs">
-            <ng-content select="[tab-bar]"></ng-content>
-          </div>
+        <div class="cv-shell__content">
           <ng-content></ng-content>
-        </main>
-      </div>
-    </div>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   `,
   styles: `
     .cv-shell {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      min-height: 100vh;
+      height: 100vh;
       background: var(--rc-bg);
       color: var(--rc-text);
     }
     .cv-shell.contained {
       border: 1px solid var(--rc-border);
-      border-radius: 16px;
+      border-radius: 12px;
       overflow: hidden;
     }
-    .cv-shell__header {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.9rem 1.25rem;
-      border-bottom: 1px solid var(--rc-border);
-      background: linear-gradient(120deg, var(--rc-surface), var(--rc-surface-strong));
-    }
-    .cv-shell__brand {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      min-width: 0;
+    .cv-shell__nav {
+      width: 240px;
+      background: var(--rc-surface);
+      border-right: 1px solid var(--rc-border);
+      color: var(--rc-text);
     }
     .cv-shell__logo {
-      width: 120px;
-      display: inline-flex;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
       align-items: center;
+    }
+    .cv-shell__toolbar {
+      backdrop-filter: blur(6px);
+    }
+    .cv-shell__titles {
+      display: grid;
+      gap: 2px;
+      margin-left: 0.5rem;
     }
     .cv-shell__app {
       font-weight: 700;
-      letter-spacing: 0.01em;
     }
     .cv-shell__section {
+      font-size: 0.85rem;
       color: var(--rc-muted);
-      font-size: 0.9rem;
     }
-    .cv-shell__section-action,
-    .cv-shell__user-menu {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      justify-content: flex-end;
+    .spacer {
+      flex: 1;
     }
-    .cv-shell__body {
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      min-height: 0;
+    .cv-shell__content {
+      padding: 1.25rem;
+      background: var(--rc-bg);
+      color: var(--rc-text);
+      min-height: calc(100vh - 64px);
     }
-    .cv-shell__nav {
-      padding: 1.1rem 1rem;
-      border-right: 1px solid var(--rc-border);
-      background: linear-gradient(180deg, var(--rc-surface), rgb(17 24 40 / 90%));
-      display: grid;
-      gap: 0.35rem;
-    }
-    .cv-shell__nav-item {
-      all: unset;
-      cursor: pointer;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
-      padding: 0.75rem 0.9rem;
-      border-radius: 12px;
-      border: 1px solid transparent;
-      transition:
-        border-color 120ms ease,
-        background 120ms ease,
-        transform 120ms ease;
-    }
-    .cv-shell__nav-item:hover {
-      background: var(--rc-surface-strong);
-      border-color: var(--rc-border);
-    }
-    .cv-shell__nav-item.active {
-      border-color: var(--rc-accent);
-      background: linear-gradient(120deg, var(--rc-surface-strong), var(--rc-surface));
-      transform: translateY(-1px);
+    a.mat-mdc-list-item.active {
+      border: 1px solid var(--rc-accent);
+      border-radius: 10px;
     }
     .cv-shell__nav-text {
       display: grid;
-      gap: 0.15rem;
+      gap: 2px;
     }
     .cv-shell__nav-label {
       font-weight: 600;
-      letter-spacing: 0.01em;
     }
     .cv-shell__nav-desc {
-      color: var(--rc-muted);
       font-size: 0.85rem;
-    }
-    .cv-shell__content {
-      padding: 1.25rem 1.5rem;
-      min-height: 0;
-      display: grid;
-      gap: 0.75rem;
-      background: var(--rc-bg);
-    }
-    .cv-shell__tabs {
-      border-bottom: 1px solid var(--rc-border);
-      padding-bottom: 0.5rem;
+      color: var(--rc-muted);
     }
   `,
 })
@@ -179,14 +147,15 @@ export class CvAppShellComponent {
   navItems = input<NavItem[]>([]);
   activeKey = input<string | null>(null);
   contained = input<boolean>(false);
-  forcedOpen = input<boolean>(false);
-  open = input<boolean>(true);
+  opened = signal<boolean>(true);
 
   navigate = output<string>();
 
-  readonly hasNav = computed(() => this.navItems().length > 0);
-
   onNavigate(key: string): void {
     this.navigate.emit(key);
+  }
+
+  toggleNav(): void {
+    this.opened.update((v) => !v);
   }
 }

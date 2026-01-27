@@ -1,22 +1,19 @@
 import { Component, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RcButtonComponent } from '@rocker-code/shared';
-import { CovalentMessageModule } from '@covalent/core/message';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-rocky-home',
   standalone: true,
-  imports: [FormsModule, RcButtonComponent, CovalentMessageModule],
+  imports: [FormsModule, RcButtonComponent, MatCardModule, MatChipsModule],
   template: `
     <div class="rocky-shell">
-      <div class="rocky-card">
-        <td-message
-          label="Covalent UI"
-          sublabel="Shared theme applied in every remote."
-          color="accent"
-          icon="search"
-          [opened]="true"
-        />
+      <mat-card class="rocky-card">
+        <mat-chip-set aria-label="Remote info">
+          <mat-chip highlighted color="primary">Material remote</mat-chip>
+        </mat-chip-set>
         <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
           <div>
             <p class="badge" style="margin: 0">Rocky Remote</p>
@@ -40,7 +37,7 @@ import { CovalentMessageModule } from '@covalent/core/message';
             }
           </div>
         </div>
-      </div>
+      </mat-card>
     </div>
   `,
 })

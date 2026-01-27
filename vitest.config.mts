@@ -2,12 +2,14 @@
 import { defineConfig } from 'vitest/config';
 import path from 'path';
 import angular from '@analogjs/vite-plugin-angular';
+import monaco from 'vite-plugin-monaco-editor';
 
 export default defineConfig({
   plugins: [
     angular({
       tsconfig: path.resolve(__dirname, 'tsconfig.vitest.json'),
     }),
+    monaco(),
   ],
   resolve: {
     alias: {

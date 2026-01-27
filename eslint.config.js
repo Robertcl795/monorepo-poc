@@ -40,6 +40,14 @@ module.exports = [
       ...tsPlugin.configs.recommended.rules,
       ...tsPlugin.configs['recommended-type-checked']?.rules,
       ...angular.configs.recommended.rules,
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
       '@angular-eslint/directive-selector': [
         'error',
         {

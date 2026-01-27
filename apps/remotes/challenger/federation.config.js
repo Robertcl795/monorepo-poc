@@ -17,6 +17,8 @@ module.exports = withNativeFederation({
     'rxjs/fetch',
     'rxjs/testing',
     'rxjs/webSocket',
+    'monaco-editor',
+    '@material/web',
     // Add further packages you don't need at runtime
   ],
 
