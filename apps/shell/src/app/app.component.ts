@@ -12,6 +12,7 @@ import {
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { ThemeComponent } from '@rocker-code/theme';
 import { REMOTE_REGISTRY } from './remote-registry';
 
 @Component({
@@ -25,6 +26,7 @@ import { REMOTE_REGISTRY } from './remote-registry';
     MatChipsModule,
     MatIconModule,
     CvAppShellComponent,
+    ThemeComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

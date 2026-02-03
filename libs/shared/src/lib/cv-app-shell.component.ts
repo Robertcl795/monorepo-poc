@@ -1,10 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, input, output, signal } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 
 export type NavItem = {
   key: string;
@@ -16,71 +11,55 @@ export type NavItem = {
 @Component({
   selector: 'rc-cv-app-shell',
   standalone: true,
-  imports: [
-    NgIf,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-  ],
+  imports: [NgIf],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
-    <mat-sidenav-container class="cv-shell" [class.contained]="contained()">
-      <mat-sidenav
-        mode="side"
-        [opened]="opened()"
-        class="cv-shell__nav"
-        [fixedInViewport]="false"
-        (openedChange)="opened.set($event)"
-      >
+    <div class="cv-shell" [class.contained]="contained()">
+      <aside class="cv-shell__nav" [class.is-open]="opened()">
         <div class="cv-shell__logo">
           <ng-content select="[logo]"></ng-content>
         </div>
-        <mat-nav-list>
+        <md-list class="cv-shell__list">
           @for (item of navItems(); track item.key) {
-            <a
-              mat-list-item
-              (click)="onNavigate(item.key)"
-              [class.active]="item.key === activeKey()"
-            >
-              <mat-icon aria-hidden="true" *ngIf="item.icon">{{ item.icon }}</mat-icon>
+            <md-list-item (click)="onNavigate(item.key)" [class.active]="item.key === activeKey()">
+              <md-icon slot="start" aria-hidden="true" *ngIf="item.icon">{{ item.icon }}</md-icon>
               <div class="cv-shell__nav-text">
                 <span class="cv-shell__nav-label">{{ item.label }}</span>
                 <span class="cv-shell__nav-desc" *ngIf="item.description">{{
                   item.description
                 }}</span>
               </div>
-            </a>
+            </md-list-item>
           }
-        </mat-nav-list>
-      </mat-sidenav>
+        </md-list>
+      </aside>
 
-      <mat-sidenav-content>
-        <mat-toolbar color="primary" class="cv-shell__toolbar">
-          <button mat-icon-button type="button" (click)="toggleNav()">
-            <mat-icon>menu</mat-icon>
-          </button>
+      <section class="cv-shell__main">
+        <header class="cv-shell__toolbar">
+          <md-icon-button type="button" aria-label="Toggle navigation" (click)="toggleNav()">
+            <md-icon>menu</md-icon>
+          </md-icon-button>
           <div class="cv-shell__titles">
             <div class="cv-shell__app">{{ appName() }}</div>
             <div class="cv-shell__section">{{ sectionName() }}</div>
           </div>
           <span class="spacer"></span>
           <ng-content select="[toolbar-actions]"></ng-content>
-          <md-icon-button aria-label="user menu" hidden></md-icon-button>
-        </mat-toolbar>
+        </header>
 
         <div class="cv-shell__content">
           <ng-content></ng-content>
         </div>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
+      </section>
+    </div>
   `,
   styles: `
     .cv-shell {
       height: 100vh;
       background: var(--rc-bg);
       color: var(--rc-text);
+      display: grid;
+      grid-template-columns: 240px 1fr;
     }
     .cv-shell.contained {
       border: 1px solid var(--rc-border);
@@ -88,10 +67,17 @@ export type NavItem = {
       overflow: hidden;
     }
     .cv-shell__nav {
-      width: 240px;
       background: var(--rc-surface);
       border-right: 1px solid var(--rc-border);
       color: var(--rc-text);
+      padding: 0.75rem 0.5rem;
+      transition: transform 150ms ease;
+    }
+    .cv-shell__nav.is-open {
+      transform: translateX(0);
+    }
+    .cv-shell__list {
+      background: transparent;
     }
     .cv-shell__logo {
       padding: 1rem;
@@ -99,8 +85,18 @@ export type NavItem = {
       justify-content: center;
       align-items: center;
     }
+    .cv-shell__main {
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
     .cv-shell__toolbar {
       backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--rc-border);
+      background: var(--rc-surface);
     }
     .cv-shell__titles {
       display: grid;
@@ -123,7 +119,7 @@ export type NavItem = {
       color: var(--rc-text);
       min-height: calc(100vh - 64px);
     }
-    a.mat-mdc-list-item.active {
+    md-list-item.active {
       border: 1px solid var(--rc-accent);
       border-radius: 10px;
     }
