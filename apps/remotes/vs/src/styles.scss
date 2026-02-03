@@ -1,0 +1,19 @@
+@use '../../../../libs/theme/src/lib/theme';
+@import 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Material+Symbols+Outlined:wght@400;500&display=swap';
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--rc-bg);
+  color: var(--rc-text);
+  font-family:
+    Inter,
+    'Space Grotesk',
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}

@@ -1,6 +1,6 @@
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 
-export type RemoteName = 'editor' | 'rocky' | 'challenger' | null;
+export type RemoteName = 'editor' | 'conv' | 'vs' | null;
 
 interface RemoteState {
   current: RemoteName;

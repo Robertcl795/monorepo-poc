@@ -217,6 +217,16 @@
               {
                 "glob": "**/*",
                 "input": "apps/remotes/editor/public"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/min",
+                "output": "/assets/monaco"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor/esm/vs/base/browser/ui/codicons/codicon",
+                "output": "/assets/monaco/vs/base/browser/ui/codicons/codicon"
               }
             ],
             "styles": ["apps/remotes/editor/src/styles.scss"],
@@ -276,15 +286,15 @@
         }
       }
     },
-    "rocky": {
+    "conv": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "apps/remotes/rocky",
-      "sourceRoot": "apps/remotes/rocky/src",
+      "root": "apps/remotes/conv",
+      "sourceRoot": "apps/remotes/conv/src",
       "prefix": "app",
       "architect": {
         "build": {
@@ -292,10 +302,10 @@
           "options": {},
           "configurations": {
             "production": {
-              "target": "rocky:esbuild:production"
+              "target": "conv:esbuild:production"
             },
             "development": {
-              "target": "rocky:esbuild:development",
+              "target": "conv:esbuild:development",
               "dev": true
             }
           },
@@ -304,7 +314,7 @@
         "serve": {
           "builder": "@angular-architects/native-federation:build",
           "options": {
-            "target": "rocky:serve-original:development",
+            "target": "conv:serve-original:development",
             "rebuildDelay": 0,
             "dev": true,
             "port": 0
@@ -317,12 +327,12 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [],
-            "tsConfig": "apps/remotes/rocky/tsconfig.spec.json",
+            "tsConfig": "apps/remotes/conv/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "apps/remotes/rocky/public"
+                "input": "apps/remotes/conv/public"
               },
               {
                 "glob": "**/*",
@@ -335,26 +345,26 @@
                 "output": "/assets/monaco/vs/base/browser/ui/codicons/codicon"
               }
             ],
-            "styles": ["apps/remotes/rocky/src/styles.scss"],
+            "styles": ["apps/remotes/conv/src/styles.scss"],
             "scripts": []
           }
         },
         "esbuild": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/rocky",
-            "index": "apps/remotes/rocky/src/index.html",
-            "browser": "apps/remotes/rocky/src/main.ts",
+            "outputPath": "dist/conv",
+            "index": "apps/remotes/conv/src/index.html",
+            "browser": "apps/remotes/conv/src/main.ts",
             "polyfills": ["es-module-shims"],
-            "tsConfig": "apps/remotes/rocky/tsconfig.app.json",
+            "tsConfig": "apps/remotes/conv/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "apps/remotes/rocky/public"
+                "input": "apps/remotes/conv/public"
               }
             ],
-            "styles": ["apps/remotes/rocky/src/styles.scss"],
+            "styles": ["apps/remotes/conv/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -385,10 +395,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "rocky:esbuild:production"
+              "buildTarget": "conv:esbuild:production"
             },
             "development": {
-              "buildTarget": "rocky:esbuild:development"
+              "buildTarget": "conv:esbuild:development"
             }
           },
           "defaultConfiguration": "development",
@@ -405,21 +415,21 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["apps/remotes/rocky/**/*.ts", "apps/remotes/rocky/**/*.html"],
-            "eslintConfig": "apps/remotes/rocky/eslint.config.js"
+            "lintFilePatterns": ["apps/remotes/conv/**/*.ts", "apps/remotes/conv/**/*.html"],
+            "eslintConfig": "apps/remotes/conv/eslint.config.js"
           }
         }
       }
     },
-    "challenger": {
+    "vs": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "apps/remotes/challenger",
-      "sourceRoot": "apps/remotes/challenger/src",
+      "root": "apps/remotes/vs",
+      "sourceRoot": "apps/remotes/vs/src",
       "prefix": "app",
       "architect": {
         "build": {
@@ -427,10 +437,10 @@
           "options": {},
           "configurations": {
             "production": {
-              "target": "challenger:esbuild:production"
+              "target": "vs:esbuild:production"
             },
             "development": {
-              "target": "challenger:esbuild:development",
+              "target": "vs:esbuild:development",
               "dev": true
             }
           },
@@ -439,7 +449,7 @@
         "serve": {
           "builder": "@angular-architects/native-federation:build",
           "options": {
-            "target": "challenger:serve-original:development",
+            "target": "vs:serve-original:development",
             "rebuildDelay": 0,
             "dev": true,
             "port": 0
@@ -452,12 +462,12 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [],
-            "tsConfig": "apps/remotes/challenger/tsconfig.spec.json",
+            "tsConfig": "apps/remotes/vs/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "apps/remotes/challenger/public"
+                "input": "apps/remotes/vs/public"
               },
               {
                 "glob": "**/*",
@@ -470,26 +480,26 @@
                 "output": "/assets/monaco/vs/base/browser/ui/codicons/codicon"
               }
             ],
-            "styles": ["apps/remotes/challenger/src/styles.scss"],
+            "styles": ["apps/remotes/vs/src/styles.scss"],
             "scripts": []
           }
         },
         "esbuild": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/challenger",
-            "index": "apps/remotes/challenger/src/index.html",
-            "browser": "apps/remotes/challenger/src/main.ts",
+            "outputPath": "dist/vs",
+            "index": "apps/remotes/vs/src/index.html",
+            "browser": "apps/remotes/vs/src/main.ts",
             "polyfills": ["es-module-shims"],
-            "tsConfig": "apps/remotes/challenger/tsconfig.app.json",
+            "tsConfig": "apps/remotes/vs/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "apps/remotes/challenger/public"
+                "input": "apps/remotes/vs/public"
               }
             ],
-            "styles": ["apps/remotes/challenger/src/styles.scss"],
+            "styles": ["apps/remotes/vs/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -520,10 +530,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "challenger:esbuild:production"
+              "buildTarget": "vs:esbuild:production"
             },
             "development": {
-              "buildTarget": "challenger:esbuild:development"
+              "buildTarget": "vs:esbuild:development"
             }
           },
           "defaultConfiguration": "development",
@@ -540,11 +550,8 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "apps/remotes/challenger/**/*.ts",
-              "apps/remotes/challenger/**/*.html"
-            ],
-            "eslintConfig": "apps/remotes/challenger/eslint.config.js"
+            "lintFilePatterns": ["apps/remotes/vs/**/*.ts", "apps/remotes/vs/**/*.html"],
+            "eslintConfig": "apps/remotes/vs/eslint.config.js"
           }
         }
       }
@@ -619,36 +626,6 @@
           "options": {
             "lintFilePatterns": ["libs/theme/**/*.ts", "libs/theme/**/*.html"],
             "eslintConfig": "libs/theme/eslint.config.js"
-          }
-        }
-      }
-    },
-    "ui-components": {
-      "projectType": "library",
-      "root": "libs/ui-components",
-      "sourceRoot": "libs/ui-components/src",
-      "prefix": "rc",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "libs/ui-components/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/ui-components/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "libs/ui-components/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "libs/ui-components/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"]
           }
         }
       }

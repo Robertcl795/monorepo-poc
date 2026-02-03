@@ -1,6 +1,6 @@
 <rc-cv-app-shell
   [appName]="'Rocker Code'"
-  [sectionName]="'Micro frontends lab'"
+  [sectionName]="'Native federation host'"
   [navItems]="navItems"
   [activeKey]="currentRemote() ?? ''"
   [contained]="true"
@@ -12,7 +12,9 @@
     <div>
       <div class="badge">Current remote: {{ currentRemote() ?? 'none' }}</div>
       <h2 class="rc-title" style="margin: 0.35rem 0 0">Dynamic host</h2>
-      <p class="rc-subtle" style="margin: 0">Deep-link friendly routing via federation manifest.</p>
+      <p class="rc-subtle" style="margin: 0">
+        Registry-driven routing ensures manual URLs load the correct remote.
+      </p>
     </div>
     <a [routerLink]="['/editor']">
       <rc-button [accent]="true" label="Launch editor"></rc-button>

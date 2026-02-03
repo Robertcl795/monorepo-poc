@@ -4,7 +4,7 @@ import { AppComponent } from './app/app.component';
 import { buildRoutes } from './app/build-routes';
 
 async function bootstrap() {
-  const routes = await buildRoutes();
+  const routes = buildRoutes();
   await bootstrapApplication(AppComponent, appConfig(routes));
 }
 

@@ -1,26 +1,19 @@
 import { loadRemoteModule } from '@angular-architects/native-federation';
 import type { Routes } from '@angular/router';
+import { REMOTE_REGISTRY } from './remote-registry';
 
-export async function buildRoutes(): Promise<Routes> {
-  const manifestResponse = await fetch('federation.manifest.json');
-  if (!manifestResponse.ok) {
-    throw new Error('Unable to load federation manifest');
-  }
-
-  const manifest = (await manifestResponse.json()) as Record<string, string>;
-  const names = Object.keys(manifest);
-
-  const remoteRoutes: Routes = names.map((remote) => ({
-    path: remote,
+export function buildRoutes(): Routes {
+  const remoteRoutes: Routes = REMOTE_REGISTRY.map((remote) => ({
+    path: remote.routePath,
     loadChildren: () =>
-      loadRemoteModule<{ REMOTE_ROUTES: Routes }>(remote, './routes').then(
+      loadRemoteModule<{ REMOTE_ROUTES: Routes }>(remote.key, remote.exposedRoutes).then(
         (m) => m.REMOTE_ROUTES ?? [],
       ),
   }));
 
   return [
     ...remoteRoutes,
-    { path: '', pathMatch: 'full', redirectTo: 'editor' },
-    { path: '**', redirectTo: 'editor' },
+    { path: '', pathMatch: 'full', redirectTo: REMOTE_REGISTRY[0]?.routePath ?? '' },
+    { path: '**', redirectTo: REMOTE_REGISTRY[0]?.routePath ?? '' },
   ];
 }
