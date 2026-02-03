@@ -3,12 +3,17 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd } from '@angular/router';
 import { filter, map, startWith } from 'rxjs';
-import { RemoteName, RemoteStore } from '@rocker-code/shared';
-import { RcButtonComponent } from '@rocker-code/shared';
-import { CvAppShellComponent } from '@rocker-code/ui-components';
+import {
+  CvAppShellComponent,
+  RemoteName,
+  RemoteStore,
+  RcButtonComponent,
+} from '@rocker-code/shared';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { ThemeComponent } from '@rocker-code/theme';
+import { REMOTE_REGISTRY } from './remote-registry';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatChipsModule,
     MatIconModule,
     CvAppShellComponent,
+    ThemeComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -29,21 +35,12 @@ export class AppComponent {
   private readonly router = inject(Router);
   private readonly remoteStore = inject(RemoteStore);
 
-  readonly navItems = [
-    { key: 'editor', label: 'Editor', description: 'Notes & ideation space', icon: 'edit' },
-    { key: 'rocky', label: 'Rocky', description: 'Search & spotlight', icon: 'travel_explore' },
-    {
-      key: 'challenger',
-      label: 'Challenger',
-      description: 'Planner & calendar',
-      icon: 'calendar_today',
-    },
-  ] satisfies ReadonlyArray<{
-    key: RemoteName;
-    label: string;
-    description: string;
-    icon: string;
-  }>;
+  readonly navItems = REMOTE_REGISTRY.map((remote) => ({
+    key: remote.key,
+    label: remote.label,
+    description: remote.description,
+    icon: remote.icon,
+  }));
 
   private readonly currentUrl = toSignal(
     this.router.events.pipe(
@@ -55,7 +52,7 @@ export class AppComponent {
 
   readonly currentRemote = computed<RemoteName>(() => {
     const url = this.currentUrl();
-    const match = this.navItems.find((item) => url?.startsWith(`/${item.key}`));
+    const match = REMOTE_REGISTRY.find((item) => url?.startsWith(`/${item.routePath}`));
     return (match?.key as RemoteName) ?? null;
   });
 
@@ -65,10 +62,10 @@ export class AppComponent {
     });
   }
 
-  onNavigate(route: RemoteName): void {
-    const target = route;
-    if (!target) return;
-    this.remoteStore.setRemote(target);
-    this.router.navigate(['/', target]).catch(console.error);
+  onNavigate(route: string): void {
+    const entry = REMOTE_REGISTRY.find((remote) => remote.key === route);
+    if (!entry) return;
+    this.remoteStore.setRemote(entry.key);
+    this.router.navigate(['/', entry.routePath]).catch(console.error);
   }
 }

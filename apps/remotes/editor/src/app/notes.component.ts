@@ -140,7 +140,8 @@ Pure Monaco setup with Angular 19 + Native Federation.
   }
 
   private configureWorkers(_monaco: MonacoNamespace): void {
-    const basePath = '/assets/monaco';
+    const origin = new URL(import.meta.url).origin;
+    const basePath = `${origin}/assets/monaco`;
     (globalThis as MonacoWorkerGlobal).MonacoEnvironment = {
       getWorkerUrl: (_: string, label: string) => {
         switch (label) {
